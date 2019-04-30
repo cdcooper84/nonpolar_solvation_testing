@@ -16,7 +16,7 @@ for line in file('actually_all_names.txt'):
     cmd = 'mkdir ' + 'mobley_test/' +  mol 
     os.system(cmd)
 
-    # Get xyzr from Jay (and rescale by 1/0.9)
+    # Get xyzr from Jay (and rescale by 1/0.92)
     filename_in = problem_folder + mol + '/test.pqr'
     print filename_in
 
