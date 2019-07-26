@@ -36,9 +36,9 @@ sphere_atoms = numpy.zeros((len(inside_atoms),4))
 sphere_atoms[:,:3] = grid_xyz[inside_atoms, :]  
 sphere_atoms[:,3]  = c_vdw_rad
 
-numpy.savetxt('sphere_atoms.xyzr', sphere_atoms, fmt='%1.5f')
+numpy.savetxt('sphere_atoms_R%1.2f.xyzr'%R, sphere_atoms, fmt='%1.5f')
 
-f = open('sphere_atoms.vdw','w')
+f = open('sphere_atoms_R%1.2f.vdw'%R,'w')
 for i in range(len(sphere_atoms)):
     f.write('C\t%1.5f\t%1.5f\n'%(c_vdw_rad, c_vdw_eps))
 
