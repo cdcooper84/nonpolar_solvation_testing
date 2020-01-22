@@ -23,10 +23,12 @@ for line in file('actually_all_names.txt'):
     filename_pqr = 'mobley_test/' + mol + '/' + mol + '.pqr'
     filename_xyzr = 'mobley_test/'  + mol + '/' + mol + '.xyzr'
     filename_xyzr_stern = 'mobley_test/'  + mol + '/' + mol + '_stern.xyzr'
+    filename_xyzr_stern28 = 'mobley_test/'  + mol + '/' + mol + '_stern28.xyzr'
     
     file_pqr = open(filename_pqr, "w")
     file_xyzr = open(filename_xyzr, "w")
     file_xyzr_stern = open(filename_xyzr_stern, "w")
+    file_xyzr_stern28 = open(filename_xyzr_stern28, "w")
 
     for line in file(filename_in):
         line_split = line.split()
@@ -60,21 +62,27 @@ for line in file('actually_all_names.txt'):
                 
                 new_r = '%1.6f'%(float(r)/0.92)
                 stern_r = '%1.6f'%(float(r)/0.92+1.4)
+                stern28_r = '%1.6f'%(float(r)/0.92+2.8)
 
                 line_prev = line_split[0]+'\t'+line_split[1]+'\t'+line_split[2]+'\t'+line_split[3]+'\t'+line_split[4]
 
                 file_pqr.write(line_prev+'\t'+x+'\t'+y+'\t'+z+'\t'+q+'\t'+new_r+'\n')
                 file_xyzr.write(x+'\t'+y+'\t'+z+'\t'+new_r+'\n')
                 file_xyzr_stern.write(x+'\t'+y+'\t'+z+'\t'+stern_r+'\n')
+                file_xyzr_stern28.write(x+'\t'+y+'\t'+z+'\t'+stern28_r+'\n')
 
     file_pqr.close()
     file_xyzr.close()
     file_xyzr_stern.close()
+    file_xyzr_stern28.close()
 
     # Generate mesh of dielectric interface
-    cmd = 'msms -if '+filename_xyzr+' -of mobley_test/' + mol + '/surf_d02 -d 2 -p 1.4 -no_header'
+    cmd = 'msms -if '+filename_xyzr+' -of mobley_test/' + mol + '/surf_d02 -d 02 -p 1.4 -no_header'
     os.system(cmd)
 
     # Generate mesh of Stern layer 
-    cmd = 'msms -if '+filename_xyzr_stern+' -of mobley_test/' + mol + '/surf_d02_stern -d 2 -p 0.01 -no_header'
+    cmd = 'msms -if '+filename_xyzr_stern+' -of mobley_test/' + mol + '/surf_d02_stern -d 02 -p 0.01 -no_header'
+
+    # Generate mesh of Stern layer at 2.8angs
+    cmd = 'msms -if '+filename_xyzr_stern28+' -of mobley_test/' + mol + '/surf_d02_stern28 -d 02 -p 0.01 -no_header'
     os.system(cmd)
